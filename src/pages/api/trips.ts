@@ -1,16 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Trip = {
+export type Trip = {
   name: string;
   countries: number;
   days: number;
   offset: string;
   rating: number;
+  image: string;
 };
 
 export type Trips = {
-  trips: Array<Trip>;
+  trips: Trip[];
 };
 
 export default function handler(
@@ -25,6 +26,7 @@ export default function handler(
         days: 21,
         offset: "810 kg",
         rating: 4.7,
+        image: "/lisbon.jpeg",
       },
       {
         name: "Autumn Roadtrip",
@@ -32,6 +34,7 @@ export default function handler(
         days: 14,
         offset: "3.56 t",
         rating: 4.7,
+        image: "/autumn.jpeg",
       },
       {
         name: "Diving Adventure in Egypt",
@@ -39,6 +42,7 @@ export default function handler(
         days: 5,
         offset: "6.92 t",
         rating: 4.7,
+        image: "/egypt.jpeg",
       },
     ],
   });

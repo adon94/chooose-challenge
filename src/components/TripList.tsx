@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
+import useSWR, { Fetcher } from "swr";
 import { Grid, GridItem } from "@chakra-ui/react";
+
 import TripCard from "@/components/TripCard";
-import { Trips, type Trip } from "@/pages/api/trips";
+import { Trips } from "@/pages/api/trips";
+
+const fetcher: Fetcher<Trips, string> = (...args) =>
+  fetch(...args).then((res) => res.json());
 
 export default function TripList() {
-  const [data, setData] = useState<Trips | null>(null);
-  const [isLoading, setLoading] = useState(false);
+  const { data, error } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL || ""}/api/trips`,
+    fetcher,
+    { refreshInterval: 1000 }
+  );
 
-  useEffect(() => {
-    setLoading(true);
-    fetch("/api/trips")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No trips data</p>;
+  if (error) return <p>Failed to load</p>;
+  if (!data) return <p>Loading...</p>;
   return (
     <>
       <Grid

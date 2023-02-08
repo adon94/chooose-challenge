@@ -1,6 +1,7 @@
-import TripList from "@/components/TripList";
 import Head from "next/head";
 import { Container } from "@chakra-ui/react";
+
+import TripList from "@/components/TripList";
 
 export default function Home() {
   return (
